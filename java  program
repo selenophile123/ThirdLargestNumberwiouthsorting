@@ -1,0 +1,140 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+class Employee {
+    private String name;
+    private double salary;
+    private int age;
+    private String department;
+
+    public Employee(String name, double salary, int age, String department) {
+        this.name = name;
+        this.salary = salary;
+        this.age = age;
+        this.department = department;
+    }
+
+    // Getters and Setters
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+}
+
+public class Employeeopt {
+    public static void main(String[] args) {
+        // Create a list to hold Employee objects
+        List<Employee> employeeList = new ArrayList<>();
+
+        // Create 10 Employee objects and add them to the list
+        employeeList.add(new Employee("John Doe", 5000.0, 30, "IT"));
+        employeeList.add(new Employee("Jane Smith", 6000.0, 35, "Marketing"));
+        employeeList.add(new Employee("Robert Johnson", 5500.0, 28, "Sales"));
+        employeeList.add(new Employee("Emily Davis", 5500.0, 32, "HR"));
+        employeeList.add(new Employee("Michael Wilson", 4500.0, 27, "Support"));
+        employeeList.add(new Employee("Sarah Brown", 7000.0, 40, "IT"));
+        employeeList.add(new Employee("David Taylor", 4000.0, 25, "Sales"));
+        employeeList.add(new Employee("Olivia Clark", 5500.0, 33, "HR"));
+        employeeList.add(new Employee("Daniel Martinez", 4500.0, 29, "Support"));
+        employeeList.add(new Employee("Sophia Rodriguez", 6500.0, 38, "Marketing"));
+
+        // 1. Method to print the count of employees in each department
+
+        printEmployeeCountByDepartment(employeeList);
+        System.out.println();
+
+        // 2. Method to sort the list by age and by salary if age is equal, and print employees
+        sortAndPrintEmployeesByAgeAndSalary(employeeList);
+
+        System.out.println();
+
+        // 3. Method to print the total salary for each department
+        printTotalSalaryByDepartment(employeeList);
+    }
+
+    // Method to print the count of employees in each department
+    public static void printEmployeeCountByDepartment(List<Employee> employeeList) {
+        // Create a map to store department names as keys and counts as values
+        Map<String, Integer> departmentCountMap = new HashMap<>();
+
+        // Count employees in each department
+        for (Employee employee : employeeList) {
+            String department = employee.getDepartment();
+            departmentCountMap.put(department, departmentCountMap.getOrDefault(department, 0) + 1);
+        }
+
+        // Print the count of employees in each department
+        for (Map.Entry<String, Integer> entry : departmentCountMap.entrySet()) {
+            String department = entry.getKey();
+            int count = entry.getValue();
+            System.out.println(department + ": " + count);
+        }
+    }
+
+    // Method to sort the list by age and by salary if age is equal, and print employees
+    public static void sortAndPrintEmployeesByAgeAndSalary(List<Employee> employeeList) {
+        // Sort the list by age and salary using a custom comparator
+        Collections.sort(employeeList, (e1, e2) -> {
+            if (e1.getAge() == e2.getAge()) {
+                return Double.compare(e1.getSalary(), e2.getSalary());
+            }
+            return Integer.compare(e1.getAge(), e2.getAge());
+        });
+
+        // Print the sorted list of employees
+        for (Employee employee : employeeList) {
+            System.out.println("Name: " + employee.getName() + ", Age: " + employee.getAge() + ", Salary: " + employee.getSalary());
+        }
+    }
+
+    // Method to print the total salary for each department
+    public static void printTotalSalaryByDepartment(List<Employee> employeeList) {
+        // Create a map to store department names as keys and total salary as values
+        Map<String, Double> departmentSalaryMap = new HashMap<>();
+
+        // Calculate the total salary for each department
+        for (Employee employee : employeeList) {
+            String department = employee.getDepartment();
+            double salary = employee.getSalary();
+            departmentSalaryMap.put(department, departmentSalaryMap.getOrDefault(department, 0.0) + salary);
+        }
+
+        // Print the total salary for each department
+        for (Map.Entry<String, Double> entry : departmentSalaryMap.entrySet()) {
+            String department = entry.getKey();
+            double totalSalary = entry.getValue();
+            System.out.println(department + ": " + totalSalary);
+        }
+    }
+}
